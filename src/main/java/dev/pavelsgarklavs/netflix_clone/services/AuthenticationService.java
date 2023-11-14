@@ -22,6 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -43,8 +45,13 @@ public class AuthenticationService {
         .role(request.getRole())
         .build();
     var savedUser = repository.save(user);
-    var jwtToken = jwtService.generateToken(user);
-    var refreshToken = jwtService.generateRefreshToken(user);
+
+    Map<String, Object> extraClaims = new HashMap<>();
+    extraClaims.put("role", user.getRole());
+
+    var jwtToken = jwtService.generateToken(extraClaims, user);
+    var refreshToken = jwtService.generateRefreshToken(extraClaims, user);
+
     saveUserToken(savedUser, jwtToken, refreshToken);
     saveInitialSubUser(savedUser, request.getFirstname());
     return AuthenticationResponse.builder()
@@ -62,8 +69,13 @@ public class AuthenticationService {
     );
     var user = repository.findByEmail(request.getEmail())
         .orElseThrow();
-    var jwtToken = jwtService.generateToken(user);
-    var refreshToken = jwtService.generateRefreshToken(user);
+
+    Map<String, Object> extraClaims = new HashMap<>();
+    extraClaims.put("role", user.getRole());
+
+    var jwtToken = jwtService.generateToken(extraClaims, user);
+    var refreshToken = jwtService.generateRefreshToken(extraClaims, user);
+
     revokeAllUserTokens(user);
     saveUserToken(user, jwtToken, refreshToken);
     return AuthenticationResponse.builder()
@@ -115,7 +127,10 @@ public class AuthenticationService {
       var user = this.repository.findByEmail(userEmail)
               .orElseThrow();
       if (jwtService.isTokenValid(refreshToken, user)) {
-        var accessToken = jwtService.generateToken(user);
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("role", user.getRole());
+
+        var accessToken = jwtService.generateToken(extraClaims, user);
         revokeAllUserTokens(user);
         saveUserToken(user, accessToken, refreshToken);
         var authResponse = AuthenticationResponse.builder()
