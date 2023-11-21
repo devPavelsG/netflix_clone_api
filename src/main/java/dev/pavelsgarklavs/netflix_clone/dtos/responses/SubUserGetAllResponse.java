@@ -11,6 +11,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubUserGetAllResponse {
+public class SubUserGetAllResponse extends BaseResponse {
   private List<String> names;
 }

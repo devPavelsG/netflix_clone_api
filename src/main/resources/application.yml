@@ -1,18 +1,14 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/public
-    username: root
-    password: root
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: validate
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    url: jdbc:oracle:thin:@//0.0.0.0:1521/XEPDB1
+    username: system
+    password: SysPassword1
+    driver-class-name: oracle.jdbc.OracleDriver
+  flyway:
+    url: jdbc:oracle:thin:@//0.0.0.0:1521/XEPDB1
+    user: system
+    password: SysPassword1
+    locations: classpath:/db/migration
 
 application:
   security:

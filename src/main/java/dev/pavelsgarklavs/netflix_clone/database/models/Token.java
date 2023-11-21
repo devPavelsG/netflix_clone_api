@@ -12,22 +12,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "TOKENS")
 public class Token extends BaseEntity {
 
-  @Column(unique = true)
-  public String token;
+  @Column(name = "TOKEN")
+  private String token;
 
   @Enumerated(EnumType.STRING)
-  public TokenType tokenType = TokenType.BEARER;
+  @Column(name = "TOKEN_TYPE")
+  private TokenType tokenType = TokenType.BEARER;
 
-  @Column(unique = true, name = "refresh_token")
-  public String refreshToken;
+  @Column(name = "REFRESH_TOKEN", unique = true)
+  private String refreshToken;
 
-  public boolean revoked;
+  @Column(name = "REVOKED")
+  private boolean revoked;
 
-  public boolean expired;
+  @Column(name = "EXPIRED")
+  private boolean expired;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
-  public User user;
+  @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
+  private User user;
 }
+

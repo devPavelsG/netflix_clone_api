@@ -18,15 +18,23 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "_user")
+@Table(name = "USERS")
 public class User extends BaseEntity implements UserDetails {
 
+  @Column(name = "FIRSTNAME")
   private String firstname;
+
+  @Column(name = "LASTNAME")
   private String lastname;
+
+  @Column(name = "EMAIL")
   private String email;
+
+  @Column(name = "PASSWORD")
   private String password;
 
   @Enumerated(EnumType.STRING)
+  @Column(name = "ROLE")
   private Role role;
 
   @OneToMany(mappedBy = "user")

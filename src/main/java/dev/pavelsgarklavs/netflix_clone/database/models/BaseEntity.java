@@ -16,13 +16,14 @@ public abstract class BaseEntity {
     @UuidGenerator(style = UuidGenerator.Style.TIME)
     @GeneratedValue
     @Setter
+    @Column(name = "ID")
     private UUID id;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "CREATED_AT", nullable = false, updatable = false)
     @Setter
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "UPDATED_AT")
     @Setter
     private LocalDateTime updatedAt;
 

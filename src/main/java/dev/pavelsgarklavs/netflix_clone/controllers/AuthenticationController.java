@@ -2,6 +2,7 @@ package dev.pavelsgarklavs.netflix_clone.controllers;
 
 import dev.pavelsgarklavs.netflix_clone.dtos.requests.AuthenticationRequest;
 import dev.pavelsgarklavs.netflix_clone.dtos.responses.AuthenticationResponse;
+import dev.pavelsgarklavs.netflix_clone.dtos.responses.BaseResponse;
 import dev.pavelsgarklavs.netflix_clone.services.AuthenticationService;
 import dev.pavelsgarklavs.netflix_clone.dtos.requests.RegisterRequest;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class AuthenticationController {
   private final AuthenticationService service;
 
   @PostMapping("/register")
-  public ResponseEntity<AuthenticationResponse> register(
+  public ResponseEntity<BaseResponse> register(
       @RequestBody RegisterRequest request
   ) {
     return ResponseEntity.ok(service.register(request));

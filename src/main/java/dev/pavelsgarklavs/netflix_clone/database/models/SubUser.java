@@ -11,11 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "sub_user")
+@Table(name = "SUB_USERS")
 public class SubUser extends BaseEntity {
+    @Column(name = "NAME")
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    public User user;
+    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
+    private User user;
 }

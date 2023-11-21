@@ -12,6 +12,8 @@ import dev.pavelsgarklavs.netflix_clone.database.repositories.TokenRepository;
 import dev.pavelsgarklavs.netflix_clone.database.enums.TokenType;
 import dev.pavelsgarklavs.netflix_clone.database.models.User;
 import dev.pavelsgarklavs.netflix_clone.database.repositories.UserRepository;
+import dev.pavelsgarklavs.netflix_clone.dtos.responses.BaseResponse;
+import dev.pavelsgarklavs.netflix_clone.dtos.responses.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +38,11 @@ public class AuthenticationService {
   private final AuthenticationManager authenticationManager;
   private final SubUserRepository subUserRepository;
 
-  public AuthenticationResponse register(RegisterRequest request) {
+  public BaseResponse register(RegisterRequest request) {
+    if (repository.existsByEmail(request.getEmail())) {
+      return new ErrorResponse("validation.email_already_exists");
+    }
+
     var user = User.builder()
         .firstname(request.getFirstname())
         .lastname(request.getLastname())
