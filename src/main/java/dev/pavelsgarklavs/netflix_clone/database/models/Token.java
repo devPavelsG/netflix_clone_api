@@ -2,16 +2,14 @@ package dev.pavelsgarklavs.netflix_clone.database.models;
 
 import dev.pavelsgarklavs.netflix_clone.database.enums.TokenType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "TOKENS")
 public class Token extends BaseEntity {
 

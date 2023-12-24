@@ -54,6 +54,7 @@ public class AuthenticationService {
 
     Map<String, Object> extraClaims = new HashMap<>();
     extraClaims.put("role", user.getRole());
+    extraClaims.put("fullname", user.getFirstname() + " " + user.getLastname());
 
     var jwtToken = jwtService.generateToken(extraClaims, user);
     var refreshToken = jwtService.generateRefreshToken(extraClaims, user);
@@ -78,6 +79,7 @@ public class AuthenticationService {
 
     Map<String, Object> extraClaims = new HashMap<>();
     extraClaims.put("role", user.getRole());
+    extraClaims.put("fullname", user.getFirstname() + " " + user.getLastname());
 
     var jwtToken = jwtService.generateToken(extraClaims, user);
     var refreshToken = jwtService.generateRefreshToken(extraClaims, user);
@@ -135,6 +137,7 @@ public class AuthenticationService {
       if (jwtService.isTokenValid(refreshToken, user)) {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", user.getRole());
+        extraClaims.put("fullname", user.getFirstname() + " " + user.getLastname());
 
         var accessToken = jwtService.generateToken(extraClaims, user);
         revokeAllUserTokens(user);

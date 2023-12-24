@@ -3,10 +3,7 @@ package dev.pavelsgarklavs.netflix_clone.database.models;
 
 import dev.pavelsgarklavs.netflix_clone.database.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,6 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity
 @Table(name = "USERS")
 public class User extends BaseEntity implements UserDetails {
@@ -38,9 +36,10 @@ public class User extends BaseEntity implements UserDetails {
   private Role role;
 
   @OneToMany(mappedBy = "user")
+  @ToString.Exclude
   private List<Token> tokens;
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<SubUser> subUsers;
 
   @Override

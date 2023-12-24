@@ -10,8 +10,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface SubUserRepository extends JpaRepository<SubUser, UUID> {
-    @Query(value = "SELECT t.name FROM SubUser t INNER JOIN t.user u WHERE u.id = :id")
-    List<String> getAllByUserId(@Param("id") UUID id);
+    @Query(value = "SELECT t FROM SubUser t INNER JOIN t.user u WHERE u.id = :id")
+    List<SubUser> getAllByUserId(@Param("id") UUID id);
 
     @Query(value = "SELECT t FROM SubUser t INNER JOIN t.user u WHERE u.id = :userId AND t.id = :subUserId")
     Optional<SubUser> getByUserIdAndSubUserId(@Param("userId") UUID userId, @Param("subUserId") UUID subUserId);

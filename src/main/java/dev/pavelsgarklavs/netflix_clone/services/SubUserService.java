@@ -11,7 +11,9 @@ import dev.pavelsgarklavs.netflix_clone.dtos.responses.SubUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,9 +40,19 @@ public class SubUserService {
     }
 
     public SubUserGetAllResponse getAll(UUID id) {
+        List<SubUserResponse> subUserResponses = subUserRepository.getAllByUserId(id)
+                .stream()
+                .map(element -> SubUserResponse
+                        .builder()
+                        .name(element.getName())
+                        .id(element.getId())
+                        .build()
+                )
+                .collect(Collectors.toList());
+
         return SubUserGetAllResponse
                 .builder()
-                .names(subUserRepository.getAllByUserId(id))
+                .subUsers(subUserResponses)
                 .build();
     }
 
