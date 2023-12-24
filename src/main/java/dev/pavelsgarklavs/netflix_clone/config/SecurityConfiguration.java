@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import static dev.pavelsgarklavs.netflix_clone.database.enums.Permission.*;
 import static dev.pavelsgarklavs.netflix_clone.database.enums.Role.*;
 import static org.springframework.http.HttpMethod.*;
+import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -32,6 +33,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
