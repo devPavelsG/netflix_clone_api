@@ -1,0 +1,2 @@
+ALTER TABLE tokens
+DROP CONSTRAINT tokens_refresh_token_key;
